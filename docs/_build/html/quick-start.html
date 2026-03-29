@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Quick Start &mdash; KnightMoves.SqlObjects 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Setup" href="setup.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0255a3" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/knight_moves_sqlobjects.forsqlserver_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schema-loader.html">Schema Loader</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KnightMoves.SqlObjects</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Quick Start</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/quick-start.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p><a class="reference external" href="https://docs.knightmovesolutions.com">Documentation Home</a></p>
+<div class="section" id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Install-Package</span> <span class="n">KnightMoves</span><span class="p">.</span><span class="n">SqlObjects</span><span class="p">.</span><span class="n">ForSqlServer</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="nn">KnightMoves.SqlObjects.ForSqlServer</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="kt">var</span> <span class="n">connStr</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="n">GetConnectionString</span><span class="p">(</span><span class="s">&quot;DefaultConnection&quot;</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">connStrBuilder</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SqlConnectionStringBuilder</span><span class="p">(</span><span class="n">connStr</span><span class="p">);</span>
+
+<span class="c1">// There are other ways to set this up through</span>
+<span class="c1">// Configuration such as appsettings.json</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServer</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+   <span class="n">options</span><span class="p">.</span><span class="n">Databases</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span>
+     <span class="n">connStrBuilder</span><span class="p">.</span><span class="n">InitialCatalog</span><span class="p">,</span>
+     <span class="k">new</span> <span class="n">DatabaseConfig</span>
+     <span class="p">{</span>
+       <span class="n">ConnectionString</span> <span class="p">=</span> <span class="n">connStrBuilder</span><span class="p">.</span><span class="n">ConnectionString</span><span class="p">,</span>
+       <span class="n">Schemas</span> <span class="p">=</span> <span class="p">[</span> <span class="s">&quot;dbo&quot;</span> <span class="p">]</span>
+     <span class="p">}</span>
+   <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="p">...</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+<span class="p">...</span>
+
+<span class="n">app</span><span class="p">.</span><span class="n">UseSqlServerObjectsForSqlServer</span><span class="p">();</span>
+
+<span class="p">...</span>
+
+<span class="n">app</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>To use the metadata in your code, you can inject the <code class="docutils literal notranslate"><span class="pre">SqlServerObjects</span></code> class into your services and
+pull the metadata from it.</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="nn">Dapper</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">KnightMoves.SqlObjects</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">KnightMoves.SqlObjects.ForSqlServer.Model</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyService</span>
+<span class="p">{</span>
+   <span class="k">private</span> <span class="k">readonly</span> <span class="n">SqlServerObjects</span> <span class="n">_sqlServerObjects</span><span class="p">;</span>
+   <span class="k">private</span> <span class="k">readonly</span> <span class="n">IDbConnection</span> <span class="n">_connection</span><span class="p">;</span>
+
+   <span class="k">public</span> <span class="nf">MyService</span><span class="p">(</span><span class="n">SqlServerObjects</span> <span class="n">sqlServerObjects</span><span class="p">,</span> <span class="n">IDbConnection</span> <span class="n">connection</span><span class="p">)</span>
+   <span class="p">{</span>
+      <span class="n">_sqlServerObjects</span> <span class="p">=</span> <span class="n">sqlServerObjects</span><span class="p">;</span>
+      <span class="n">_connection</span> <span class="p">=</span> <span class="n">connection</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="p">...</span>
+
+   <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">GetCustomerAsync</span><span class="p">(</span><span class="kt">int</span> <span class="n">customerId</span><span class="p">)</span>
+   <span class="p">{</span>
+
+      <span class="kt">var</span> <span class="n">customerTableCols</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">,</span> <span class="s">&quot;dbo&quot;</span><span class="p">)</span>
+                                               <span class="p">.</span><span class="n">ForSelect</span><span class="p">()</span>
+                                               <span class="p">.</span><span class="n">ToColumnNames</span><span class="p">();</span>
+
+      <span class="kt">var</span> <span class="n">sql</span> <span class="p">=</span> <span class="n">TSQL</span>
+
+         <span class="p">.</span><span class="n">SELECT</span><span class="p">()</span>
+          <span class="p">.</span><span class="n">COLUMNS</span><span class="p">(</span><span class="n">customerTableCols</span><span class="p">)</span>
+         <span class="p">.</span><span class="n">FROM</span><span class="p">(</span><span class="s">&quot;dbo&quot;</span><span class="p">,</span> <span class="s">&quot;Customers&quot;</span><span class="p">)</span>
+         <span class="p">.</span><span class="n">WHERE</span><span class="p">(</span><span class="s">&quot;CustomerId&quot;</span><span class="p">).</span><span class="n">IsEqualTo</span><span class="p">(</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">)</span>
+         <span class="p">.</span><span class="n">Build</span><span class="p">()</span>
+
+     <span class="p">;</span>
+
+     <span class="c1">// Use the sql string with Dapper, Entity Framework, or any other data access technology</span>
+     <span class="c1">// that accepts raw SQL strings to execute the query and return the results.</span>
+
+     <span class="kt">var</span> <span class="n">paramObj</span> <span class="p">=</span> <span class="k">new</span> <span class="p">{</span> <span class="n">CustomerId</span> <span class="p">=</span> <span class="n">customerId</span> <span class="p">};</span>
+
+     <span class="kt">var</span> <span class="n">customer</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_connection</span><span class="p">.</span><span class="n">QueryAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">sql</span><span class="p">,</span> <span class="n">paramObj</span><span class="p">);</span>
+
+     <span class="k">return</span> <span class="n">customer</span><span class="p">;</span>
+   <span class="p">}</span>
+
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="setup.html" class="btn btn-neutral float-right" title="Setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2025, Knight Move Solutions, Inc.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

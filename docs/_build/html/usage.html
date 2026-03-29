@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Usage &mdash; KnightMoves.SqlObjects 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Schema Loader" href="schema-loader.html" />
+    <link rel="prev" title="Setup" href="setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0255a3" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/knight_moves_sqlobjects.forsqlserver_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#inject-sqlserverobjects">Inject <code class="docutils literal notranslate"><span class="pre">SqlServerObjects</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-getcolumns-method">The GetColumns() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-forselect-method">The ForSelect() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-forinsert-method">The ForInsert() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-forupdate-method">The ForUpdate() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-tocolumnnames-method">The ToColumnNames() Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schema-loader.html">Schema Loader</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KnightMoves.SqlObjects</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p><a class="reference external" href="https://docs.knightmovesolutions.com">Documentation Home</a></p>
+<div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>Steps to use the metadata in you code are pretty straightforward.</p>
+<ul class="simple">
+<li><p>Inject the <code class="docutils literal notranslate"><span class="pre">SqlServerObjects</span></code> class into your services</p></li>
+<li><p>Use it to get the metadata for your database tables and columns</p></li>
+</ul>
+<div class="section" id="inject-sqlserverobjects">
+<h2>Inject <code class="docutils literal notranslate"><span class="pre">SqlServerObjects</span></code><a class="headerlink" href="#inject-sqlserverobjects" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="nn">Dapper</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">KnightMoves.SqlObjects</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">KnightMoves.SqlObjects.ForSqlServer.Model</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyService</span>
+<span class="p">{</span>
+   <span class="k">private</span> <span class="k">readonly</span> <span class="n">SqlServerObjects</span> <span class="n">_sqlServerObjects</span><span class="p">;</span>
+   <span class="k">private</span> <span class="k">readonly</span> <span class="n">IDbConnection</span> <span class="n">_connection</span><span class="p">;</span>
+
+   <span class="k">public</span> <span class="nf">MyService</span><span class="p">(</span><span class="n">SqlServerObjects</span> <span class="n">sqlServerObjects</span><span class="p">,</span> <span class="n">IDbConnection</span> <span class="n">connection</span><span class="p">)</span>
+   <span class="p">{</span>
+      <span class="n">_sqlServerObjects</span> <span class="p">=</span> <span class="n">sqlServerObjects</span><span class="p">;</span>
+      <span class="n">_connection</span> <span class="p">=</span> <span class="n">connection</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">DoSomething</span><span class="p">()</span>
+   <span class="p">{</span>
+      <span class="c1">// Get the column names for the Customers table in the default schema (dbo)</span>
+
+      <span class="kt">var</span> <span class="n">customerColumns</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">)</span>
+                                             <span class="p">.</span><span class="n">ForSelect</span><span class="p">()</span>
+                                             <span class="p">.</span><span class="n">ToColumnNames</span><span class="p">();</span>
+
+      <span class="c1">// Use the KnightMoves.SqlObjects Query Builder to build a SQL string with the column names</span>
+      <span class="kt">var</span> <span class="n">sql</span> <span class="p">=</span> <span class="n">TSQL</span>
+
+        <span class="p">.</span><span class="n">SELECT</span><span class="p">()</span>
+          <span class="p">.</span><span class="n">COLUMNS</span><span class="p">(</span><span class="n">customerColumns</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">FROM</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">)</span>
+
+      <span class="p">;</span>
+
+      <span class="kt">var</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_connection</span><span class="p">.</span><span class="n">QueryAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">[]&gt;(</span><span class="n">sql</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-getcolumns-method">
+<h2>The GetColumns() Method<a class="headerlink" href="#the-getcolumns-method" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">GetColumns()</span></code> method is used to get the column metadata for a specific table. It accepts the name of the table and optionally the schema name
+and database name (in case you’re using multiple databases). If the schema name is not provided, it defaults to <code class="docutils literal notranslate"><span class="pre">dbo</span></code>. If the database name is not
+provided, it defaults to the first database in the configuration (which may be the only database if you have only one configured).</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get the column metadata for the Customers table in the default schema (dbo) and default database</span>
+<span class="kt">var</span> <span class="n">customerColumns</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">);</span>
+
+<span class="c1">// Get the column metadata for the Orders table in the reporting schema and default database</span>
+<span class="kt">var</span> <span class="n">orderColumns</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Orders&quot;</span><span class="p">,</span> <span class="s">&quot;reporting&quot;</span><span class="p">);</span>
+
+<span class="c1">// Get the column metadata for the Products table in the default schema (dbo) and a specific database</span>
+<span class="kt">var</span> <span class="n">productColumns</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Products&quot;</span><span class="p">,</span> <span class="s">&quot;dbo&quot;</span><span class="p">,</span> <span class="s">&quot;InventoryDB&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">GetColumns()</span></code> method returns a collection of <code class="docutils literal notranslate"><span class="pre">SqlServerColumn</span></code> objects, which contain the metadata for each column in the specified table.</p>
+<ul class="simple">
+<li><p>Columns are always returned in the order they are defined in the database, which is important for SQL statements where the order of columns matters</p></li>
+</ul>
+</div>
+<div class="section" id="the-forselect-method">
+<h2>The ForSelect() Method<a class="headerlink" href="#the-forselect-method" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ForSelect()</span></code> method is an extension method that returns the collection of <code class="docutils literal notranslate"><span class="pre">SqlServerColumn</span></code> objects that is suitable for use in a SELECT statement.</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="kt">var</span> <span class="n">customerColumns</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">)</span>
+                                       <span class="p">.</span><span class="n">ForSelect</span><span class="p">();</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Columns are always returned in the order they are defined in the database, which is important for SQL statements where the order of columns matters</p></li>
+</ul>
+</div>
+<div class="section" id="the-forinsert-method">
+<h2>The ForInsert() Method<a class="headerlink" href="#the-forinsert-method" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ForInsert()</span></code> method is an extension method that returns the collection of <code class="docutils literal notranslate"><span class="pre">SqlServerColumn</span></code> objects that is suitable for use in an INSERT statement.
+Most importantly, it excludes columns that are identity columns, which cannot be included in an INSERT statement.</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="kt">var</span> <span class="n">customerColumns</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">)</span>
+                                       <span class="p">.</span><span class="n">ForInsert</span><span class="p">();</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Columns are always returned in the order they are defined in the database, which is important for SQL statements where the order of columns matters</p></li>
+</ul>
+</div>
+<div class="section" id="the-forupdate-method">
+<h2>The ForUpdate() Method<a class="headerlink" href="#the-forupdate-method" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ForUpdate()</span></code> method is an extension method that returns the collection of <code class="docutils literal notranslate"><span class="pre">SqlServerColumn</span></code> objects that is suitable for use in an UPDATE statement.
+Most importantly, it excludes columns that are identity columns, which cannot be included in the main body of an UPDATE statement.</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="kt">var</span> <span class="n">customerColumns</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">)</span>
+                                       <span class="p">.</span><span class="n">ForInsert</span><span class="p">();</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Columns are always returned in the order they are defined in the database, which is important for SQL statements where the order of columns matters</p></li>
+</ul>
+</div>
+<div class="section" id="the-tocolumnnames-method">
+<h2>The ToColumnNames() Method<a class="headerlink" href="#the-tocolumnnames-method" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ToColumnNames()</span></code> method is an extension method that returns a collection of column names from a collection of <code class="docutils literal notranslate"><span class="pre">SqlServerColumn</span></code> objects as a
+collection of strings. This is useful for building SQL statements where you need the column names as strings mainly for including in the SQL string itself.</p>
+<div class="highlight-csharp notranslate"><div class="highlight"><pre><span></span><span class="kt">var</span> <span class="n">customerColumnNames</span> <span class="p">=</span> <span class="n">_sqlServerObjects</span><span class="p">.</span><span class="n">GetColumns</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">)</span>
+                                           <span class="p">.</span><span class="n">ForSelect</span><span class="p">()</span>
+                                           <span class="p">.</span><span class="n">ToColumnNames</span><span class="p">()</span>
+
+<span class="c1">// customerColumnNames is of type List&lt;string&gt; so now you can use it to build a SQL string</span>
+<span class="kt">var</span> <span class="n">sql</span> <span class="p">=</span> <span class="n">TSQL</span>
+
+  <span class="p">.</span><span class="n">SELECT</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">COLUMNS</span><span class="p">(</span><span class="n">customerColumns</span><span class="p">)</span>
+  <span class="p">.</span><span class="n">FROM</span><span class="p">(</span><span class="s">&quot;Customers&quot;</span><span class="p">)</span>
+
+<span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="schema-loader.html" class="btn btn-neutral float-right" title="Schema Loader" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="setup.html" class="btn btn-neutral float-left" title="Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2025, Knight Move Solutions, Inc.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
