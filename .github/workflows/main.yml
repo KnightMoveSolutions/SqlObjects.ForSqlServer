@@ -2,7 +2,7 @@ name: CI/CD docs
 on:
   workflow_dispatch:
   push:
-    branches: "main"
+    branches: [ "main" ]
 
 jobs:
   build:

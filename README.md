@@ -5,8 +5,5 @@ the metadata can be injected into data access layer objects for dynamic query bu
 
 ## Documentation
 
-[https://docs.knightmovesolutions.com/sql-objects/for-sql-server/index.html](https://docs.knightmovesolutions.com/sql-objects/for-sql-server/index.html)
+[https://docs.knightmovesolutions.com/sql-objects-for-sql-server/index.html](https://docs.knightmovesolutions.com/sql-objects-for-sql-server/index.html)
 
-## Quick Example
-
-TODO
