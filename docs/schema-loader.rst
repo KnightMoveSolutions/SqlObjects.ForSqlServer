@@ -8,7 +8,7 @@ The heart of this library is in the Schema Loader, which is the class that conta
 and loads it into the ``SqlServerObjects`` class. 
 
 If, for whatever reason, you want to extend it or use a custom schema loader, you can implement the ``ISchemaLoader`` interface and register 
-it after calling ``builder.Services.AddSqlObjectsForSqlServerOptions()`` to ensure it is used instead of the ``DefaultSchemaLoader`` that 
+it after calling ``builder.Services.AddSqlObjectsForSqlServer()`` to ensure it is used instead of the ``DefaultSchemaLoader`` that 
 comes with the library. 
 
 Here's the interface that must be implemented
@@ -32,4 +32,3 @@ Once you have implemented the interface, you can register it in the DI container
 .. code-block:: csharp 
 
    builder.Services.AddSingleton<ISchemaLoader, MyCustomSchemaLoader>();
-

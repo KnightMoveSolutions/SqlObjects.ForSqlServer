@@ -11,6 +11,7 @@ Welcome to KnightMoves.SqlObjects.ForSqlServer documentation!
    setup
    usage
    schema-loader
+   release-notes
 
 Indices and tables
 ==================

@@ -38,6 +38,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release Notes" href="release-notes.html" />
     <link rel="prev" title="Usage" href="usage.html" /> 
 </head>
 
@@ -95,6 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ischemaloader">ISchemaLoader</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
 </ul>
 
             
@@ -168,7 +170,7 @@
 <p>The heart of this library is in the Schema Loader, which is the class that contains the code that fetches the metadata from the database
 and loads it into the <code class="docutils literal notranslate"><span class="pre">SqlServerObjects</span></code> class.</p>
 <p>If, for whatever reason, you want to extend it or use a custom schema loader, you can implement the <code class="docutils literal notranslate"><span class="pre">ISchemaLoader</span></code> interface and register
-it after calling <code class="docutils literal notranslate"><span class="pre">builder.Services.AddSqlObjectsForSqlServerOptions()</span></code> to ensure it is used instead of the <code class="docutils literal notranslate"><span class="pre">DefaultSchemaLoader</span></code> that
+it after calling <code class="docutils literal notranslate"><span class="pre">builder.Services.AddSqlObjectsForSqlServer()</span></code> to ensure it is used instead of the <code class="docutils literal notranslate"><span class="pre">DefaultSchemaLoader</span></code> that
 comes with the library.</p>
 <p>Here’s the interface that must be implemented</p>
 <div class="section" id="ischemaloader">
@@ -196,6 +198,7 @@ comes with the library.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="release-notes.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

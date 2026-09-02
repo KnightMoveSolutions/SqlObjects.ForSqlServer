@@ -159,7 +159,7 @@ Use the Factory Method to Pull from Configuration
 
    var options = SqlObjectsForSqlServerOptions.Create(builder.Configuration);
 
-   builder.Services.AddSqlObjectsForSqlServerOptions(options);
+   builder.Services.AddSqlObjectsForSqlServer(options);
 
    ...
 
@@ -173,7 +173,7 @@ Use the ``IConfiguration`` Extension Method to Pull from Configuration
    // It will look for the "SqlObjectsForSqlServerOptions" section in configuration and bind it to the options object
    var options = builder.Configuration.GetSqlObjectsForSqlServerOptions();
 
-   builder.Services.AddSqlObjectsForSqlServerOptions(options);
+   builder.Services.AddSqlObjectsForSqlServer(options);
 
    ...
 
@@ -219,7 +219,7 @@ You can pull the options for a particular tenant like this using the Factory Met
 
    var options = SqlObjectsForSqlServerOptions.Create(config);
 
-   builder.Services.AddSqlObjectsForSqlServerOptions(options);
+   builder.Services.AddSqlObjectsForSqlServer(options);
 
    ...
 
@@ -232,7 +232,6 @@ Or you can pull the options for a particular tenant like this using the ``IConfi
    
    var options = builder.Configuration.GetSqlObjectsForSqlServerOptions("TenantA");
 
-   builder.Services.AddSqlObjectsForSqlServerOptions(options);
+   builder.Services.AddSqlObjectsForSqlServer(options);
 
    ...
-

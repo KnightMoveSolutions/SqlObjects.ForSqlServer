@@ -106,6 +106,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="schema-loader.html">Schema Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
 </ul>
 
             
@@ -311,7 +312,7 @@ to the <code class="docutils literal notranslate"><span class="pre">AddSqlObject
 
 <span class="kt">var</span> <span class="n">options</span> <span class="p">=</span> <span class="n">SqlObjectsForSqlServerOptions</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">);</span>
 
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServerOptions</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServer</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
 
 <span class="p">...</span>
 </pre></div>
@@ -324,7 +325,7 @@ to the <code class="docutils literal notranslate"><span class="pre">AddSqlObject
 <span class="c1">// It will look for the &quot;SqlObjectsForSqlServerOptions&quot; section in configuration and bind it to the options object</span>
 <span class="kt">var</span> <span class="n">options</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="n">GetSqlObjectsForSqlServerOptions</span><span class="p">();</span>
 
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServerOptions</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServer</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
 
 <span class="p">...</span>
 </pre></div>
@@ -365,7 +366,7 @@ to the <code class="docutils literal notranslate"><span class="pre">AddSqlObject
 
 <span class="kt">var</span> <span class="n">options</span> <span class="p">=</span> <span class="n">SqlObjectsForSqlServerOptions</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
 
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServerOptions</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServer</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
 
 <span class="p">...</span>
 </pre></div>
@@ -375,7 +376,7 @@ to the <code class="docutils literal notranslate"><span class="pre">AddSqlObject
 
 <span class="kt">var</span> <span class="n">options</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="n">GetSqlObjectsForSqlServerOptions</span><span class="p">(</span><span class="s">&quot;TenantA&quot;</span><span class="p">);</span>
 
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServerOptions</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSqlObjectsForSqlServer</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
 
 <span class="p">...</span>
 </pre></div>
