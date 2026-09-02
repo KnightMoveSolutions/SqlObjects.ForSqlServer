@@ -100,10 +100,10 @@ public class DefaultSchemaLoaderTests
             .ReturnsAsync(mockColumnReader.Object) // For view columns
         ;
 
-        Func<string, DbConnection> connectionFactory = (connStr) => mockConnection.Object;
-        Func<string, DbConnection, DbCommand> commandFactory = (sql, conn) => mockCommand.Object;
+        DbConnection connectionFactory(string connStr) => mockConnection.Object;
+        DbCommand commandFactory(string sql, DbConnection conn) => mockCommand.Object;
 
-        var loader = new DefaultSchemaLoader(options, connectionFactory, commandFactory, mockCommandExecutor.Object);
+        var loader = new DefaultSchemaLoader(options, connectionFactory, (Func<string, DbConnection, DbCommand>)commandFactory, mockCommandExecutor.Object);
         var sqlServerObjects = new SqlServerObjects();
 
         // ACT

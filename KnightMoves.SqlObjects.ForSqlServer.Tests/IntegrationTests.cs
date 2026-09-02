@@ -26,20 +26,20 @@ public class IntegrationTests
             }
         };
 
-        Func<string, DbConnection> connectionFactory = (connStr) => new SqlConnection(connStr);
-        Func<string, DbConnection, DbCommand> commandFactory = (sql, conn) => 
+        static DbConnection connectionFactory(string connStr) => new SqlConnection(connStr);
+        static DbCommand commandFactory(string sql, DbConnection conn)
         {
             var cmd = conn.CreateCommand();
             cmd.CommandText = sql;
             return cmd;
-        };
+        }
 
-        var loader = new DefaultSchemaLoader(options, connectionFactory, commandFactory, new DbCommandExecutor());
+        var loader = new DefaultSchemaLoader(options, connectionFactory, (Func<string, DbConnection, DbCommand>)commandFactory, new DbCommandExecutor());
 
         var sqlServerObjects = new SqlServerObjects();
 
         // ACT
-        await loader.LoadSchemasAsync(sqlServerObjects);
+        await loader.LoadSchemasAsync(sqlServerObjects, TestContext.Current.CancellationToken);
 
         // ASSERT
         Assert.NotNull(sqlServerObjects.Databases);
@@ -61,6 +61,6 @@ public class IntegrationTests
         Assert.Equal(13, dboSchema.Tables.Where(t => t.IsView == false).ToList().Count);
         Assert.Equal(16, dboSchema.Tables.Where(t => t.IsView == true).ToList().Count);
 
-        Assert.NotEmpty(dboSchema.Tables.Where(t => t.Columns.Count > 0));
+        Assert.Contains(dboSchema.Tables, t => t.Columns.Count > 0);
     }
 }

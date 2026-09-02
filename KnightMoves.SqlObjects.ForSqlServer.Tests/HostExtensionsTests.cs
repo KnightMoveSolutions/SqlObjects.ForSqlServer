@@ -29,11 +29,11 @@ public class HostExtensionsTests
         // ACT & ASSERT
         Assert.False(state.HasCompleted);
 
-        host = host.UseSqlServerObjectsForSqlServer();
+        host = host.UseSqlServerObjectsForSqlServer(cancellationToken: TestContext.Current.CancellationToken) as IHost;
 
         Assert.True(state.HasCompleted);
 
-        host = host.UseSqlServerObjectsForSqlServer(); // Call again to test idempotency
+        host = host?.UseSqlServerObjectsForSqlServer(cancellationToken: TestContext.Current.CancellationToken) as IHost; // Call again to test idempotency
 
         mockSchemaLoader.Verify(s => s.LoadSchemasAsync(It.IsAny<SqlServerObjects>(), It.IsAny<CancellationToken>()), Times.Once);
         Assert.True(state.HasCompleted);

@@ -9,20 +9,20 @@ namespace KnightMoves.SqlObjects.ForSqlServer.Configuration;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddSqlObjectsForSqlServerOptions(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddSqlObjectsForSqlServer(this IServiceCollection services, IConfiguration configuration)
     {
         var options = SqlObjectsForSqlServerOptions.Create(configuration) ?? new();
         services.AddSingleton(options);
         return services.RegisterServices();
     }
 
-    public static IServiceCollection AddSqlObjectsForSqlServerOptions(this IServiceCollection services, SqlObjectsForSqlServerOptions options)
+    public static IServiceCollection AddSqlObjectsForSqlServer(this IServiceCollection services, SqlObjectsForSqlServerOptions options)
     {
         services.AddSingleton(options);
         return services.RegisterServices();
     }
 
-    public static IServiceCollection AddSqlObjectsForSqlServerOptions(this IServiceCollection services, Action<SqlObjectsForSqlServerOptions> configure)
+    public static IServiceCollection AddSqlObjectsForSqlServer(this IServiceCollection services, Action<SqlObjectsForSqlServerOptions> configure)
     {
         var options = new SqlObjectsForSqlServerOptions();
         configure(options);
@@ -38,10 +38,10 @@ public static class DependencyInjection
         services.AddSingleton<ISchemaLoader, DefaultSchemaLoader>();
 
         // Factory functions
-        services.AddTransient<Func<string, DbConnection>>( _ => (string connStr) => new SqlConnection(connStr));
+        services.AddTransient<Func<string, DbConnection>>( _ => connStr => new SqlConnection(connStr));
         services.AddTransient<Func<string, DbConnection, IDbCommand>>
         ( _ => 
-            (string sql, DbConnection conn) =>
+            (sql, conn) =>
             {
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = sql;

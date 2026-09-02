@@ -6,26 +6,17 @@ using System.Data.Common;
 
 namespace KnightMoves.SqlObjects.ForSqlServer;
 
-public sealed class DefaultSchemaLoader : ISchemaLoader
+public sealed class DefaultSchemaLoader(
+    SqlObjectsForSqlServerOptions options,
+    Func<string, DbConnection> connectionFactory,
+    Func<string, DbConnection, IDbCommand> commandFactory,
+    IDbCommandExecutor dbCommandExecutor
+    ) : ISchemaLoader
 {
-    private readonly SqlObjectsForSqlServerOptions _options;
-    private readonly Func<string, DbConnection> _connectionFactory;
-    private readonly Func<string, DbConnection, IDbCommand> _commandFactory;
-    private readonly IDbCommandExecutor _dbCommandExecutor;
-
-    public DefaultSchemaLoader
-    (
-        SqlObjectsForSqlServerOptions options, 
-        Func<string, DbConnection> connectionFactory, 
-        Func<string, DbConnection, IDbCommand> commandFactory, 
-        IDbCommandExecutor dbCommandExecutor
-    )
-    {
-        _options = options;
-        _connectionFactory = connectionFactory;
-        _commandFactory = commandFactory;
-        _dbCommandExecutor = dbCommandExecutor;
-    }
+    private readonly SqlObjectsForSqlServerOptions _options = options;
+    private readonly Func<string, DbConnection> _connectionFactory = connectionFactory;
+    private readonly Func<string, DbConnection, IDbCommand> _commandFactory = commandFactory;
+    private readonly IDbCommandExecutor _dbCommandExecutor = dbCommandExecutor;
 
     public async Task LoadSchemasAsync(SqlServerObjects sqlServerObjects, CancellationToken cancellationToken = default)
     {
@@ -33,7 +24,7 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
             await LoadSqlObjects(_options.Databases[dbConfig], sqlServerObjects, cancellationToken);
     }
 
-    private string GetSchemaSql(List<string> schemas) => 
+    private static string GetSchemaSql(List<string> schemas) => 
         TSQL
             .SELECT()
               .COLUMN("SCHEMA_NAME")
@@ -45,7 +36,7 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
             .Build(new { Schemas = schemas })
         ;
 
-    private string GetTableSql(string schema) =>
+    private static string GetTableSql(string schema) =>
         TSQL
             .SELECT()
               .COLUMN("TABLE_SCHEMA")
@@ -60,7 +51,7 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
             .Build(new { Schema = schema })
         ;
 
-    private string GetViewSql(string schema) =>
+    private static string GetViewSql(string schema) =>
         TSQL
             .SELECT()
               .COLUMN("TABLE_SCHEMA")
@@ -74,7 +65,7 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
             .Build(new { Schema = schema })
         ;
 
-    private string GetColumnSql(string schema, string table)
+    private static string GetColumnSql(string schema, string table)
     {
         var pkSql = TSQL
             .SELECT()
@@ -201,7 +192,7 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
 
     private async Task LoadSchemas(DbConnection connection, SqlServerDatabase sqlServerDb, List<string> schemas, CancellationToken cancellationToken)
     {
-        var schemaSql = GetSchemaSql(schemas);
+        var schemaSql = DefaultSchemaLoader.GetSchemaSql(schemas);
         
         using (var cmd = _commandFactory(schemaSql, connection) as DbCommand)
         {
@@ -211,14 +202,12 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
                 return;
             }
 
-            using (var reader = await _dbCommandExecutor.ExecuteReaderAsync(cmd, cancellationToken).ConfigureAwait(false))
+            using var reader = await _dbCommandExecutor.ExecuteReaderAsync(cmd, cancellationToken).ConfigureAwait(false);
+            while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
             {
-                while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    var schemaname = reader.GetOrdinal("SCHEMA_NAME");
-                    var sqlServerSchema = new SqlServerSchema { Name = reader.GetString(schemaname) };
-                    sqlServerDb.Schemas.Add(sqlServerSchema);
-                }
+                var schemaname = reader.GetOrdinal("SCHEMA_NAME");
+                var sqlServerSchema = new SqlServerSchema { Name = reader.GetString(schemaname) };
+                sqlServerDb.Schemas.Add(sqlServerSchema);
             }
         }
 
@@ -240,13 +229,11 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
                 ThrowDbCommandException();
                 return;
             }
-            using (var reader = await _dbCommandExecutor.ExecuteReaderAsync(cmd, cancellationToken).ConfigureAwait(false))
+            using var reader = await _dbCommandExecutor.ExecuteReaderAsync(cmd, cancellationToken).ConfigureAwait(false);
+            while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
             {
-                while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    var sqlServerTable = new SqlServerTable { Name = reader.GetString("TABLE_NAME"), IsView = false };
-                    sqlServerSchema.Tables.Add(sqlServerTable);
-                }
+                var sqlServerTable = new SqlServerTable { Name = reader.GetString("TABLE_NAME"), IsView = false };
+                sqlServerSchema.Tables.Add(sqlServerTable);
             }
         }
         foreach (var sqlServerTable in sqlServerSchema.Tables.Where(t => !t.IsView))
@@ -255,7 +242,7 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
 
     private async Task LoadViews(DbConnection connection, SqlServerSchema sqlServerSchema, CancellationToken cancellationToken)
     {
-        var viewSql = GetViewSql(sqlServerSchema.Name);
+        var viewSql = DefaultSchemaLoader.GetViewSql(sqlServerSchema.Name);
 
         using (var cmd = _commandFactory(viewSql, connection) as DbCommand)
         {
@@ -264,13 +251,11 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
                 ThrowDbCommandException();
                 return;
             }
-            using (var reader = await _dbCommandExecutor.ExecuteReaderAsync(cmd, cancellationToken).ConfigureAwait(false))
+            using var reader = await _dbCommandExecutor.ExecuteReaderAsync(cmd, cancellationToken).ConfigureAwait(false);
+            while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
             {
-                while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    var sqlServerView = new SqlServerTable { Name = reader.GetString("TABLE_NAME"), IsView = true };
-                    sqlServerSchema.Tables.Add(sqlServerView);
-                }
+                var sqlServerView = new SqlServerTable { Name = reader.GetString("TABLE_NAME"), IsView = true };
+                sqlServerSchema.Tables.Add(sqlServerView);
             }
         }
 
@@ -338,7 +323,7 @@ public sealed class DefaultSchemaLoader : ISchemaLoader
         }
     }
 
-    private void ThrowDbCommandException()
+    private static void ThrowDbCommandException()
     {
         throw new InvalidOperationException($"Command factory {typeof(Func<string, DbConnection, IDbCommand>)} must return a type that derives from {typeof(DbCommand)}.");
     }
